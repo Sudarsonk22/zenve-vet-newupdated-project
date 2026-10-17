@@ -1,0 +1,158 @@
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #edf4f3;
+  padding: 14px;
+}
+
+.auth-card {
+  width: min(390px, 100%);
+  background: #fff;
+  border-radius: 14px;
+  padding: 20px 24px 18px;
+  box-shadow: 0 10px 40px rgba(16, 33, 26, 0.1);
+  text-align: left;
+}
+
+.auth-logo {
+  height: 32px;
+  width: auto;
+  margin-bottom: 8px;
+}
+
+.auth-card h1 {
+  font: 700 22px/1.2 Manrope, sans-serif;
+  letter-spacing: -0.5px;
+  color: #10211a;
+  margin: 0 0 4px;
+}
+
+.auth-sub {
+  font-size: 13px;
+  color: #5f6d65;
+  margin: 0 0 14px;
+}
+
+.auth-field {
+  margin-bottom: 10px;
+}
+
+.auth-field label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #0d3d30;
+  margin-bottom: 4px;
+}
+
+.auth-input {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  border: 1px solid #dfe6ea;
+  border-radius: 8px;
+  background: #f6f9fa;
+  padding: 0 12px;
+  color: #5f6d65;
+}
+
+.auth-input:focus-within {
+  border-color: #1f7a62;
+  background: #fff;
+}
+
+.auth-input input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  padding: 9px 0;
+  font-size: 13px;
+  color: #26352d;
+}
+
+.auth-eye {
+  display: flex;
+  border: 0;
+  background: transparent;
+  color: #5f6d65;
+  padding: 2px;
+  cursor: pointer;
+}
+
+.auth-eye:hover {
+  color: #1f7a62;
+}
+
+.auth-error {
+  font-size: 12px;
+  color: #b42318;
+  margin: 0 0 10px;
+}
+
+.auth-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  height: 40px;
+  border: 0;
+  border-radius: 8px;
+  background: #1f7a62;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.auth-submit:hover {
+  background: #186a54;
+}
+
+.auth-submit:disabled {
+  opacity: 0.6;
+}
+
+.auth-switch {
+  font-size: 12px;
+  color: #5f6d65;
+  text-align: center;
+  margin: 12px 0 0;
+}
+
+.auth-switch button {
+  border: 0;
+  background: transparent;
+  color: #1f7a62;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+}
+
+.auth-logout {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 38px;
+  padding: 0 16px;
+  border: 1px solid #dfe6ea;
+  border-radius: 999px;
+  background: #fff;
+  color: #0d3d30;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(16, 33, 26, 0.12);
+}
+
+.auth-logout:hover {
+  background: #edf4f3;
+}

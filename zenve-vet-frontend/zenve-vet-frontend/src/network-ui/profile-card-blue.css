@@ -1,0 +1,37 @@
+.profile-card .card-cover {
+  background: linear-gradient(135deg, #5db4ee, #258bd1);
+}
+
+.profile-card .cover-steth {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.profile-card .cover-city {
+  color: #ffffff;
+}
+
+.profile-card .specialty {
+  color: #1f7bbf;
+}
+
+.profile-card .location {
+  color: #5f7485;
+}
+
+.profile-card .view-button {
+  background: #eaf4fc;
+  border: 1px solid #cfe5f6;
+  color: #1c4a6e;
+}
+
+.profile-card .view-button:hover {
+  background: #d9ecfa;
+}
+
+.profile-card .connect-button {
+  color: #258bd1;
+}
+
+.profile-card .connect-button:hover {
+  background: #eaf4fc;
+}
