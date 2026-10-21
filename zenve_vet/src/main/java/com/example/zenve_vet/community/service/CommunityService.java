@@ -7,6 +7,7 @@ import com.example.zenve_vet.community.dto.CommunityDtos.*;
 import com.example.zenve_vet.community.model.Community;
 import com.example.zenve_vet.community.model.CommunityMember;
 import com.example.zenve_vet.community.model.CommunityMessage;
+import com.example.zenve_vet.community.repository.CommunityFollowRepository;
 import com.example.zenve_vet.community.repository.CommunityMemberRepository;
 import com.example.zenve_vet.community.repository.CommunityMessageRepository;
 import com.example.zenve_vet.community.repository.CommunityRepository;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -27,14 +29,17 @@ public class CommunityService {
     private final CommunityRepository communities;
     private final CommunityMemberRepository members;
     private final CommunityMessageRepository messages;
+    private final CommunityFollowRepository follows;
     private final VetRepository vets;
     private final AuthService auth;
 
     public CommunityService(CommunityRepository communities, CommunityMemberRepository members,
-                            CommunityMessageRepository messages, VetRepository vets, AuthService auth) {
+                            CommunityMessageRepository messages, CommunityFollowRepository follows,
+                            VetRepository vets, AuthService auth) {
         this.communities = communities;
         this.members = members;
         this.messages = messages;
+        this.follows = follows;
         this.vets = vets;
         this.auth = auth;
     }
@@ -52,6 +57,7 @@ public class CommunityService {
         community.setDescription(req.description() == null ? "" : req.description().trim());
         community.setImageUrl(req.imageUrl());
         community.setCreatorId(me);
+        community.setInviteCode(newCode());
         communities.save(community);
 
         CommunityMember admin = new CommunityMember();
@@ -134,12 +140,15 @@ public class CommunityService {
         }
     }
 
-    // admin invites a doctor
+    // admin invites a doctor he is connected with
     public void invite(String token, Long id, Long vetId) {
         Long me = meId(token);
         requireAdmin(id, me);
         if (vetId == null || !vets.existsById(vetId)) {
             throw new IllegalArgumentException("Doctor not found.");
+        }
+        if (!follows.connected(me, vetId)) {
+            throw new IllegalArgumentException("You can only invite doctors you are connected with.");
         }
         if (members.findByCommunityIdAndVetId(id, vetId).isPresent()) {
             throw new IllegalArgumentException("This doctor is already invited or a member.");
@@ -151,6 +160,39 @@ public class CommunityService {
         invited.setRole("MEMBER");
         invited.setStatus("INVITED");
         members.save(invited);
+    }
+
+    // what a doctor sees when he opens an invite link
+    public CommunityResponse linkPreview(String token, String code) {
+        Long me = meId(token);
+        return toResponse(findByCode(code), me);
+    }
+
+    // a doctor joins with an invite link, only if he is connected with the admin
+    public void joinByLink(String token, String code) {
+        Long me = meId(token);
+        Community community = findByCode(code);
+        CommunityMember mine = members.findByCommunityIdAndVetId(community.getId(), me).orElse(null);
+
+        if (mine != null && "JOINED".equals(mine.getStatus())) {
+            return;
+        }
+
+        boolean invited = mine != null && "INVITED".equals(mine.getStatus());
+        if (!invited && !follows.connected(me, community.getCreatorId())) {
+            String creator = vets.findById(community.getCreatorId()).map(VetProfile::getFullName).orElse("the admin");
+            throw new IllegalArgumentException("You can only join with this link if you are connected with "
+                    + creator + ". Follow them first.");
+        }
+
+        if (mine == null) {
+            mine = new CommunityMember();
+            mine.setCommunityId(community.getId());
+            mine.setVetId(me);
+            mine.setRole("MEMBER");
+        }
+        mine.setStatus("JOINED");
+        members.save(mine);
     }
 
     // the invited doctor accepts
@@ -228,6 +270,19 @@ public class CommunityService {
                 .orElseThrow(() -> new IllegalArgumentException("Community not found."));
     }
 
+    private Community findByCode(String code) {
+        for (Community c : communities.findAll()) {
+            if (code != null && code.equals(c.getInviteCode())) {
+                return c;
+            }
+        }
+        throw new IllegalArgumentException("This invite link is not valid.");
+    }
+
+    private String newCode() {
+        return UUID.randomUUID().toString().replace("-", "").substring(0, 12);
+    }
+
     private CommunityMember requireJoined(Long id, Long vetId) {
         return members.findByCommunityIdAndVetId(id, vetId)
                 .filter(m -> "JOINED".equals(m.getStatus()))
@@ -257,9 +312,19 @@ public class CommunityService {
             status = mine.getStatus();
             role = mine.getRole();
         }
+
+        String code = "";
+        if ("ADMIN".equals(role)) {
+            if (c.getInviteCode() == null) {
+                c.setInviteCode(newCode());
+                communities.save(c);
+            }
+            code = c.getInviteCode();
+        }
+
         String creator = vets.findById(c.getCreatorId()).map(VetProfile::getFullName).orElse("Doctor");
         return new CommunityResponse(c.getId(), c.getName(), c.getCategory(), c.getDescription(),
-                c.getImageUrl(), joined.size(), creator, status, role, online);
+                c.getImageUrl(), joined.size(), creator, status, role, online, code);
     }
 
     private MessageResponse toMessage(CommunityMessage m) {

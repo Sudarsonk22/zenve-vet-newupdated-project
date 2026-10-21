@@ -12,9 +12,10 @@ public class CommunityDtos {
     public record MessageRequest(String body) {}
 
     // status is JOINED, REQUESTED, INVITED or NONE (my relation to this community)
+    // inviteCode is filled only for the admin
     public record CommunityResponse(Long id, String name, String category, String description, String imageUrl,
                                     int memberCount, String creatorName, String status, String role,
-                                    int onlineCount) {}
+                                    int onlineCount, String inviteCode) {}
 
     public record MemberResponse(Long vetId, String name, String specialty, String imageUrl, String role,
                                  boolean online) {}

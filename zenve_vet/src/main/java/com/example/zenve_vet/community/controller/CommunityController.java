@@ -36,6 +36,19 @@ public class CommunityController {
         return service.requests(token);
     }
 
+    @GetMapping("/invite-link/{code}")
+    public CommunityResponse linkPreview(@RequestHeader(value = TOKEN, required = false) String token,
+                                         @PathVariable String code) {
+        return service.linkPreview(token, code);
+    }
+
+    @PostMapping("/invite-link/{code}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void joinByLink(@RequestHeader(value = TOKEN, required = false) String token,
+                           @PathVariable String code) {
+        service.joinByLink(token, code);
+    }
+
     @GetMapping("/{id}")
     public DetailResponse detail(@RequestHeader(value = TOKEN, required = false) String token,
                                  @PathVariable Long id) {

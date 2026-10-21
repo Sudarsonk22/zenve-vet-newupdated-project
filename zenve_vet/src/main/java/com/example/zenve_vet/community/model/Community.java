@@ -23,6 +23,8 @@ public class Community {
 
     private Long creatorId;
 
+    private String inviteCode;
+
     private LocalDateTime createdAt = LocalDateTime.now();
 
     public Long getId() { return id; }
@@ -36,5 +38,7 @@ public class Community {
     public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
     public Long getCreatorId() { return creatorId; }
     public void setCreatorId(Long creatorId) { this.creatorId = creatorId; }
+    public String getInviteCode() { return inviteCode; }
+    public void setInviteCode(String inviteCode) { this.inviteCode = inviteCode; }
     public LocalDateTime getCreatedAt() { return createdAt; }
 }

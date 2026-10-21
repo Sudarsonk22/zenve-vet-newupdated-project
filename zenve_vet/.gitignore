@@ -33,3 +33,7 @@ build/
 .vscode/
 
 local.properties
+
+
+uploads/
+*.log

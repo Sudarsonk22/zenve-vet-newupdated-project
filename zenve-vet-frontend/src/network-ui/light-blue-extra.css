@@ -1,0 +1,207 @@
+/* Light blue touches for the pages that the main theme does not know about */
+
+/* Pages that define their own green accent colour */
+:root,
+.searchPage,
+.messagesPage,
+.shortVideosPage,
+.uploadForm {
+  --zv-primary: #258bd1;
+  --zv-secondary: #329bdc;
+  --zv-bg: #f3f9ff;
+}
+
+/* Clinical cases hero */
+.cases-hero {
+  background: #dff1ff;
+  color: #25475f;
+}
+
+.cases-copy p {
+  color: #3f6682;
+}
+
+.cases-hero-art {
+  background: radial-gradient(circle at 48% 45%, #7fb6d4 0, #3c87b0 36%, #1b5a80 68%);
+}
+
+/* Advertise hero */
+.ad-hero {
+  background: linear-gradient(115deg, #eaf7ff, #d6edff);
+  color: #25475f;
+}
+
+.ad-eyebrow {
+  color: #2784bd;
+}
+
+.ad-hero > p {
+  color: #5f8097;
+}
+
+/* Member benefits hero */
+.bh-hero::before {
+  background: linear-gradient(90deg, rgba(20, 90, 140, 0.8) 0%, rgba(40, 130, 180, 0.55) 50%, rgba(60, 150, 190, 0.4) 100%);
+}
+
+/* Create and Edit profile popups: light blue top with the doctor image */
+.cp-hero {
+  background: linear-gradient(135deg, #eaf7ff 0%, #d6edff 100%);
+}
+
+.cp-hero-photo,
+.cp-hero-img,
+.cp-hero-art {
+  display: none;
+}
+
+.cp-hero::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 46%;
+  max-width: 340px;
+  pointer-events: none;
+  background: url('../assets/doctor-character.png') no-repeat center 22% / cover;
+  mix-blend-mode: multiply;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.45) 12%, #000 32%);
+  mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.45) 12%, #000 32%);
+}
+
+.cp-hero h2 span {
+  color: #1d6595;
+}
+
+/* Profile page: keep everything on the left */
+.pf-main,
+.pf-identity,
+.pf-main .pf-info,
+.pf-main .pf-info * {
+  text-align: left;
+}
+
+.pf-main .pf-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.pf-main .pf-info > * {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* Profile page: green to light blue */
+.pf-specialty {
+  color: #1d6595;
+}
+
+.pf-btn-primary {
+  background: #258bd1;
+  border-color: #258bd1;
+  color: #fff;
+}
+
+.pf-btn-primary:hover {
+  background: #1679b9;
+}
+
+.pf-tab-active {
+  border-bottom-color: #258bd1;
+  color: #1877b6;
+}
+
+.pf-chip {
+  color: #1d6595;
+}
+
+.pf-strength-head b,
+.pf-check-done,
+.pf-fact b {
+  color: #1d6595;
+}
+
+.pf-bar span {
+  background: #258bd1;
+}
+
+.pf-avatar {
+  color: #1d6595;
+}
+
+/* Communities */
+.comm-tab.active {
+  background: #e7f5ff;
+  border-color: rgba(37, 139, 209, 0.3);
+}
+
+.comm-card-cover {
+  background: linear-gradient(135deg, #2387c7, #8fd0f5);
+}
+
+.comm-cat-tag {
+  background: rgba(37, 139, 209, 0.1);
+  color: #1d6595;
+}
+
+.comm-btn-chat,
+.comm-btn-accept {
+  background: #258bd1;
+}
+
+/* Community group chat */
+.cc-window {
+  background: #eaf4fb;
+}
+
+.cc-head {
+  background: #1d6595;
+}
+
+.cc-mine .cc-bubble {
+  background: #d5ecfb;
+}
+
+.cc-sender {
+  color: #1d6595;
+}
+
+.cc-input button {
+  background: #258bd1;
+}
+
+/* Comments on ads */
+.ac-logo,
+.ac-avatar {
+  background: #e7f5ff;
+  color: #1d6595;
+}
+
+.ac-comment-btn:hover {
+  color: #1d6595;
+}
+
+.ac-form input:focus {
+  border-color: #6cbce9;
+}
+
+.ac-form button {
+  background: #258bd1;
+}
+
+/* Post reports */
+.report-btn-action.resolve {
+  background: #e7f5ff;
+  border-color: #b9e1f8;
+  color: #1d6595;
+}
+
+.report-btn-action.resolve:hover {
+  background: #d5ecfb;
+}
+
+.report-reason-item.selected {
+  background: #e7f5ff;
+}
